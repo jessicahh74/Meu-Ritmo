@@ -171,7 +171,7 @@ Documento de referência: `ARCHITECTURE.md`. Cada tarefa deve ser entregue, test
   - Sem rolagem horizontal da página em 360px.
 - **Testes:** manual com dados vazios, 1 dia, 7 dias, valores muito díspares.
 
-### T16 — Integração Mapa → Ritmo (`priority.js`) · P1
+### T16 — Integração Mapa → Ritmo (`priority.js`) · P1 · ✅ Concluída
 - **Depende de:** T07, T12, T13, T09
 - **Objetivo:** `Priority.suggest(grade)` e uso na home ("Estudar agora"), no seletor do timer (ordenado, pré-selecionado, selo da faixa), no resultado da avaliação e no histórico de estudo (tempo por matéria × faixa).
 - **Critérios de aceitação:**
@@ -185,13 +185,13 @@ Documento de referência: `ARCHITECTURE.md`. Cada tarefa deve ser entregue, test
 
 ## Fase 3 — Robustez e entrega
 
-### T17 — Home / painel inicial · P1
+### T17 — Home / painel inicial · P1 · ⏭ Dispensada no MVP simplificado
 - **Depende de:** T09, T14, T16
 - **Objetivo:** `view-home.js`: resumo do Mapa (faixas por matéria), tempo estudado hoje/semana, "Estudar agora", atalhos para as duas funcionalidades.
 - **Critérios de aceitação:** funciona com dados vazios, parciais e completos; todos os atalhos navegam corretamente.
 - **Testes:** manual nos três cenários de dados.
 
-### T18 — Recuperação de sessão após recarga · P2
+### T18 — Recuperação de sessão após recarga · P2 · ⏭ Dispensada no MVP simplificado
 - **Depende de:** T13
 - **Objetivo:** persistir `timer` com `lastHeartbeatAt` e restaurar em `paused`, creditando no máximo até o último heartbeat.
 - **Critérios de aceitação:**
@@ -200,14 +200,16 @@ Documento de referência: `ARCHITECTURE.md`. Cada tarefa deve ser entregue, test
   - Dados de `timer` corrompidos são descartados sem erro.
 - **Testes:** manual: recarregar durante foco, durante pausa e durante intervalo; unitário de restauração com relógio falso.
 
-### T19 — Responsividade, acessibilidade e estados de erro · P2
+### T19 — Responsividade, acessibilidade e estados de erro · P2 · ✅ Concluída (escopo reduzido)
 - **Depende de:** T17
+- **Escopo aplicado:** revisão de responsividade, navegação, botões, estados vazios e fallback quando o `localStorage` está indisponível; sem novas funcionalidades.
 - **Objetivo:** revisão transversal: 320/360/768/1280px, foco visível, ordem de tabulação, `aria-label` em gráficos, `aria-live` no timer sem excesso, contraste adequado, aviso quando `isPersistent()` é falso.
 - **Critérios de aceitação:** nenhuma rolagem horizontal da página; todo fluxo concluível só com teclado; faixas distinguíveis sem cor; aviso de dados não persistentes exibido quando aplicável.
 - **Testes:** checklist manual por tela; simular `localStorage` bloqueado.
 
-### T20 — Verificação final de ponta a ponta · P2
+### T20 — Verificação final de ponta a ponta · P2 · ✅ Concluída (MVP simplificado)
 - **Depende de:** todas as anteriores
+- **Escopo aplicado:** validação final do fluxo principal aprovado, em Chrome desktop e 360px, sem novas funcionalidades.
 - **Objetivo:** executar o roteiro completo e corrigir apenas defeitos encontrados; limpar código morto.
 - **Roteiro:** primeiro acesso → escolher série → avaliar as 4 matérias → conferir ranking → estudar a matéria prioritária → finalizar → ver histórico/gráficos → refazer avaliação → ver evolução → trocar de série → recarregar → abrir offline (sem rede).
 - **Critérios de aceitação:** roteiro completo sem erro no console; `tests/runner.html` 100% ✔; nenhuma requisição de rede nas DevTools; funciona em Chrome e Firefox atuais.

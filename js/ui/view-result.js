@@ -135,13 +135,19 @@
 
       actions.className = 'result-actions';
       [
-        { href: '#/mapa/avaliar/' + subject.id, label: 'Refazer questionário' },
+        { href: '#/ritmo', label: 'Estudar esta matéria agora', subjectId: subject.id },
+        { href: '#/mapa/avaliar/' + subject.id, label: 'Refazer questionário', secondary: true },
         { href: '#/mapa', label: 'Escolher outra matéria', secondary: true }
       ].forEach(function (linkData) {
         var link = document.createElement('a');
         link.className = 'button-link' + (linkData.secondary ? ' secondary' : '');
         link.href = linkData.href;
         link.textContent = linkData.label;
+        if (linkData.subjectId) {
+          link.addEventListener('click', function () {
+            MeuRitmo.UI.TimerView.selectSubject(linkData.subjectId);
+          });
+        }
         actions.appendChild(link);
       });
 

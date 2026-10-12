@@ -138,18 +138,30 @@
     return list;
   }
 
-  function createSubjectList(totals) {
+  function createSubjectList(totals, suggestions) {
     var list = document.createElement('ul');
 
     list.className = 'study-subject-list';
     MeuRitmo.Subjects.all.forEach(function (subject) {
+      var suggestion = suggestions.find(function (item) {
+        return item.subjectId === subject.id;
+      });
       var item = document.createElement('li');
+      var details = document.createElement('div');
       var name = document.createElement('span');
+      var badge = document.createElement('span');
       var value = document.createElement('strong');
 
       name.textContent = subject.name;
+      badge.className = 'priority-badge' +
+        (suggestion && suggestion.band ? ' band-' + suggestion.band : '');
+      badge.textContent = suggestion && suggestion.band
+        ? 'Faixa ' + MeuRitmo.Config.bands[suggestion.band].label
+        : 'Sem avaliação';
       value.textContent = MeuRitmo.Utils.formatDuration(totals[subject.id]);
-      item.appendChild(name);
+      details.appendChild(name);
+      details.appendChild(badge);
+      item.appendChild(details);
       item.appendChild(value);
       list.appendChild(item);
     });
@@ -174,6 +186,7 @@
       var todaySessions = MeuRitmo.StudyLog.byDay(todayKey);
       var currentWeekTotal = totalSeconds(currentWeekDays);
       var previousWeekTotal = totalSeconds(previousWeekDays);
+      var suggestions = MeuRitmo.Priority.suggest(profile.grade);
       var selectedWeekKey = currentWeekKey;
       var section = document.createElement('section');
       var title = document.createElement('h1');
@@ -255,7 +268,7 @@
         dailySection.appendChild(dailyTitle);
         dailySection.appendChild(createDaysList(days));
         subjectSection.appendChild(subjectTitle);
-        subjectSection.appendChild(createSubjectList(subjects));
+        subjectSection.appendChild(createSubjectList(subjects, suggestions));
         weekTotalText.className = 'study-week-total';
         weekTotalText.textContent = 'Total da semana: ' +
           MeuRitmo.Utils.formatDuration(weekTotal);

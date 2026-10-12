@@ -11,6 +11,36 @@
   color: var(--color-text-muted);
 }
 
+.home-shell {
+  max-width: 48rem;
+}
+
+.home-priority-card {
+  margin-top: var(--space-5);
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-left: 0.4rem solid var(--result-band-color, var(--color-primary));
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.home-priority-card h2 {
+  margin-top: 0;
+  margin-bottom: var(--space-2);
+}
+
+.home-priority-card .priority-badge {
+  margin-bottom: var(--space-3);
+}
+
+.home-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
 .route-links {
   display: flex;
   flex-wrap: wrap;
@@ -397,6 +427,16 @@
 .band-laranja { --result-band-color: var(--band-laranja); }
 .band-vermelho { --result-band-color: var(--band-vermelho); }
 
+.priority-badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--result-band-color, var(--color-border));
+  border-radius: 999px;
+  color: var(--result-band-color, var(--color-text-muted));
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
 .result-score {
   margin-bottom: var(--space-2);
   font-size: clamp(1.5rem, 6vw, 2.25rem);
@@ -646,6 +686,16 @@
   opacity: 0.75;
 }
 
+.timer-priority-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
 .timer-phase {
   margin: var(--space-6) 0 0;
   color: var(--color-primary-dark);
@@ -787,6 +837,16 @@
 .study-day-list span,
 .study-subject-list span {
   color: var(--color-text-muted);
+}
+
+.study-subject-list li > div {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-1);
+}
+
+.study-subject-list .priority-badge {
+  color: var(--result-band-color, var(--color-text-muted));
 }
 
 .study-session-list li > span {

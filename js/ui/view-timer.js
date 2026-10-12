@@ -4,6 +4,7 @@
   var MeuRitmo = global.MeuRitmo;
   var controller = MeuRitmo.Pomodoro.create();
   var lastSummary = null;
+  var requestedSubjectId = null;
 
   function formatClock(milliseconds) {
     var totalSeconds = Math.max(0, Math.ceil(milliseconds / 1000));
@@ -71,14 +72,28 @@
   }
 
   MeuRitmo.UI.TimerView = {
+    selectSubject: function (subjectId) {
+      if (!MeuRitmo.Subjects.getById(subjectId)) {
+        return false;
+      }
+      requestedSubjectId = subjectId;
+      return true;
+    },
     render: function (container) {
       var profile = MeuRitmo.Profile.get();
+      var suggestions = MeuRitmo.Priority.suggest(profile.grade);
+      var hasPriority = suggestions.some(function (suggestion) {
+        return suggestion.percent !== null;
+      });
+      var preferredSubjectId = requestedSubjectId ||
+        (hasPriority ? suggestions[0].subjectId : null);
       var section = document.createElement('section');
       var title = document.createElement('h1');
       var description = document.createElement('p');
       var timerCard = document.createElement('section');
       var subjectLabel = document.createElement('label');
       var subjectSelect = document.createElement('select');
+      var priorityInfo = document.createElement('p');
       var phase = document.createElement('p');
       var time = document.createElement('p');
       var state = document.createElement('p');
@@ -103,9 +118,15 @@
       subjectLabel.textContent = 'Matéria';
       subjectSelect.id = 'timer-subject';
       subjectSelect.appendChild(new Option('Selecione uma matéria', ''));
-      MeuRitmo.Subjects.all.forEach(function (subject) {
-        subjectSelect.appendChild(new Option(subject.name, subject.id));
+      suggestions.forEach(function (suggestion) {
+        var subject = MeuRitmo.Subjects.getById(suggestion.subjectId);
+        var suffix = suggestion.band
+          ? ' — Faixa ' + MeuRitmo.Config.bands[suggestion.band].label
+          : ' — Sem avaliação';
+
+        subjectSelect.appendChild(new Option(subject.name + suffix, subject.id));
       });
+      priorityInfo.className = 'timer-priority-info';
       phase.id = 'timer-phase';
       phase.className = 'timer-phase';
       time.className = 'timer-time';
@@ -135,6 +156,7 @@
       actions.appendChild(finishButton);
       timerCard.appendChild(subjectLabel);
       timerCard.appendChild(subjectSelect);
+      timerCard.appendChild(priorityInfo);
       timerCard.appendChild(phase);
       timerCard.appendChild(time);
       timerCard.appendChild(state);
@@ -148,6 +170,35 @@
       section.appendChild(summaryArea);
       section.appendChild(historyLink);
       container.replaceChildren(section);
+
+      if (controller.getSnapshot().status === 'idle' && preferredSubjectId) {
+        subjectSelect.value = preferredSubjectId;
+      }
+      requestedSubjectId = null;
+
+      function renderPriorityInfo() {
+        var suggestion = suggestions.find(function (item) {
+          return item.subjectId === subjectSelect.value;
+        });
+
+        priorityInfo.replaceChildren();
+        if (!suggestion) {
+          priorityInfo.textContent = hasPriority
+            ? 'A primeira matéria da lista é a sugestão atual.'
+            : 'Faça o Mapa das Dificuldades para receber uma sugestão.';
+          return;
+        }
+
+        if (suggestion.band) {
+          var band = MeuRitmo.Config.bands[suggestion.band];
+          var badge = document.createElement('span');
+
+          badge.className = 'priority-badge band-' + suggestion.band;
+          badge.textContent = band.icon + ' Faixa ' + band.label;
+          priorityInfo.appendChild(badge);
+        }
+        priorityInfo.appendChild(document.createTextNode(suggestion.reason));
+      }
 
       function update() {
         var snapshot = controller.getSnapshot();
@@ -181,6 +232,7 @@
         pauseButton.textContent = snapshot.status === 'paused' ? 'Retomar' : 'Pausar';
         pauseButton.disabled = snapshot.status !== 'running' && snapshot.status !== 'paused';
         finishButton.disabled = snapshot.status === 'idle';
+        renderPriorityInfo();
         document.title = titleFor(snapshot);
       }
 
