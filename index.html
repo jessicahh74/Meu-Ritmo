@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Meu Ritmo: acompanhe suas dificuldades e organize seus estudos.">
+    <title>Meu Ritmo</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#view">Ir para o conteúdo</a>
+
+    <header class="site-header">
+      <div class="shell header-content">
+        <a class="brand" href="#/" aria-label="Meu Ritmo, página inicial">Meu Ritmo</a>
+        <div class="header-actions">
+          <nav aria-label="Navegação principal">
+            <ul class="main-nav">
+              <li><a href="#/" data-nav="home">Início</a></li>
+              <li><a href="#/mapa" data-nav="mapa">Mapa</a></li>
+              <li><a href="#/ritmo" data-nav="ritmo">Ritmo</a></li>
+            </ul>
+          </nav>
+          <button class="grade-button" id="grade-button" type="button">Definir série</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="view" class="shell main-content" tabindex="-1"></main>
+
+    <noscript>
+      <p class="shell noscript-message">Ative o JavaScript para usar o Meu Ritmo.</p>
+    </noscript>
+
+    <script src="js/core/config.js"></script>
+    <script src="js/core/utils.js"></script>
+    <script src="js/core/storage.js"></script>
+    <script src="js/core/router.js"></script>
+    <script src="js/data/subjects.js"></script>
+    <script src="js/data/questions-1ano.js"></script>
+    <script src="js/data/questions-2ano.js"></script>
+    <script src="js/data/questions-3ano.js"></script>
+    <script src="js/domain/scoring.js"></script>
+    <script src="js/domain/profile.js"></script>
+    <script src="js/domain/assessments.js"></script>
+    <script src="js/ui/persistence-warning.js"></script>
+    <script src="js/ui/profile-selector.js"></script>
+    <script src="js/ui/view-placeholder.js"></script>
+    <script src="js/ui/view-home.js"></script>
+    <script src="js/ui/view-map.js"></script>
+    <script src="js/ui/view-quiz.js"></script>
+    <script src="js/ui/view-result.js"></script>
+    <script src="js/ui/view-assessment-history.js"></script>
+    <script src="js/ui/view-timer.js"></script>
+    <script src="js/ui/view-study-history.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
