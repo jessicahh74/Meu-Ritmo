@@ -125,6 +125,104 @@
     return svg;
   }
 
+  function bars(container, data, options) {
+    var entries = Array.isArray(data) ? data : [];
+    var settings = options || {};
+    var compact = global.matchMedia && global.matchMedia('(max-width: 31rem)').matches;
+    var width = compact ? 340 : 680;
+    var height = compact ? 270 : 300;
+    var plot = compact
+      ? { left: 42, right: 10, top: 38, bottom: 52 }
+      : { left: 54, right: 18, top: 38, bottom: 58 };
+    var plotWidth = width - plot.left - plot.right;
+    var plotHeight = height - plot.top - plot.bottom;
+    var values = entries.map(function (entry) {
+      var value = Number(entry && entry.value);
+
+      return Number.isFinite(value) && value > 0 ? value : 0;
+    });
+    var maximum = Math.max.apply(null, values.concat([0]));
+    var scaleMaximum = maximum || 1;
+    var formatValue = typeof settings.formatValue === 'function'
+      ? settings.formatValue
+      : function (value) { return String(value); };
+    var svg = svgElement('svg', {
+      class: 'bar-chart',
+      viewBox: '0 0 ' + width + ' ' + height,
+      role: 'img',
+      'aria-label': settings.ariaLabel || 'Gráfico de barras',
+      preserveAspectRatio: 'xMidYMid meet'
+    });
+    var title = svgElement('title');
+
+    title.textContent = settings.ariaLabel || 'Gráfico de barras';
+    svg.appendChild(title);
+
+    [0, 1].forEach(function (position) {
+      var y = plot.top + plotHeight - position * plotHeight;
+      var tick = svgElement('text', {
+        x: plot.left - 8,
+        y: y + 4,
+        class: 'chart-axis-label',
+        'text-anchor': 'end'
+      });
+
+      tick.textContent = position === 0 ? formatValue(0) : formatValue(maximum);
+      svg.appendChild(svgElement('line', {
+        x1: plot.left,
+        x2: width - plot.right,
+        y1: y,
+        y2: y,
+        class: 'chart-grid-line'
+      }));
+      svg.appendChild(tick);
+    });
+
+    entries.forEach(function (entry, index) {
+      var value = values[index];
+      var slotWidth = plotWidth / Math.max(entries.length, 1);
+      var barWidth = Math.min(56, slotWidth * 0.58);
+      var barHeight = (value / scaleMaximum) * plotHeight;
+      var x = plot.left + index * slotWidth + (slotWidth - barWidth) / 2;
+      var y = plot.top + plotHeight - barHeight;
+      var center = x + barWidth / 2;
+      var group = svgElement('g', { class: 'bar-chart-item' });
+      var itemTitle = svgElement('title');
+      var valueLabel = svgElement('text', {
+        x: center,
+        y: Math.max(18, y - 9),
+        class: 'chart-value-label',
+        'text-anchor': 'middle'
+      });
+      var axisLabel = svgElement('text', {
+        x: center,
+        y: height - 22,
+        class: 'chart-date-label',
+        'text-anchor': 'middle'
+      });
+
+      itemTitle.textContent = String(entry && entry.label || '') + ': ' + formatValue(value);
+      valueLabel.textContent = formatValue(value);
+      axisLabel.textContent = String(entry && entry.label || '');
+      group.appendChild(itemTitle);
+      group.appendChild(svgElement('rect', {
+        x: x,
+        y: y,
+        width: barWidth,
+        height: barHeight,
+        rx: 5,
+        class: 'chart-bar'
+      }));
+      group.appendChild(valueLabel);
+      group.appendChild(axisLabel);
+      svg.appendChild(group);
+    });
+
+    container.replaceChildren(svg);
+    return svg;
+  }
+
   MeuRitmo.Charts = MeuRitmo.Charts || {};
   MeuRitmo.Charts.line = line;
+  MeuRitmo.Charts.bars = bars;
 }(window));

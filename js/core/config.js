@@ -39,7 +39,14 @@
     storagePrefix: 'meuRitmo:v1:',
     storageKeys: Object.freeze({
       profile: 'profile',
-      assessments: 'assessments'
+      assessments: 'assessments',
+      sessions: 'sessions'
+    }),
+    pomodoro: Object.freeze({
+      focusMs: 25 * 60 * 1000,
+      shortBreakMs: 5 * 60 * 1000,
+      longBreakMs: 15 * 60 * 1000,
+      longBreakEvery: 4
     }),
     bandOrder: Object.freeze(['verde', 'amarelo', 'laranja', 'vermelho']),
     bands: Object.freeze(bands),

@@ -123,7 +123,7 @@ Documento de referência: `ARCHITECTURE.md`. Cada tarefa deve ser entregue, test
 
 ## Fase 2 — Ritmo de Estudos
 
-### T11 — Motor do Pomodoro (`pomodoro.js`) · P0
+### T11 — Motor do Pomodoro (`pomodoro.js`) · P0 · ✅ Concluída
 - **Depende de:** T02, T03
 - **Objetivo:** máquina de estados com relógio injetável: foco 25 min → intervalo curto 5 min; a cada 4 focos, intervalo longo 15 min; após intervalo, estado `waiting`.
 - **Critérios de aceitação:**
@@ -133,7 +133,7 @@ Documento de referência: `ARCHITECTURE.md`. Cada tarefa deve ser entregue, test
   - Transições inválidas (ex.: `resume` sem estar pausado) são ignoradas sem erro.
 - **Testes:** unitários com relógio falso: foco completo, pausa/retomada, finalizar no meio do foco, finalizar durante intervalo, ciclo longo após 4 focos, finalizar sem iniciar.
 
-### T12 — Registro de sessões (`study-log.js`) · P0
+### T12 — Registro de sessões (`study-log.js`) · P0 · ✅ Concluída
 - **Depende de:** T02, T11 (contrato de `session`)
 - **Objetivo:** `save`, `byDay`, `totalsByDay`, `totalsByWeek`, `totalsBySubject`.
 - **Critérios de aceitação:**
@@ -142,7 +142,7 @@ Documento de referência: `ARCHITECTURE.md`. Cada tarefa deve ser entregue, test
   - Semana segunda–domingo; totais por matéria corretos.
 - **Testes:** unitários com sessões fabricadas cruzando virada de semana e de mês; intervalo vazio.
 
-### T13 — Tela do cronômetro · P0
+### T13 — Tela do cronômetro · P0 · ✅ Concluída
 - **Depende de:** T11, T12, T05
 - **Objetivo:** `view-timer.js`: seleção da matéria, iniciar, pausar, retomar, finalizar; exibir fase atual, tempo restante, pomodoros concluídos; salvar sessão ao finalizar.
 - **Critérios de aceitação:**
@@ -153,7 +153,7 @@ Documento de referência: `ARCHITECTURE.md`. Cada tarefa deve ser entregue, test
   - Manter a aba em segundo plano por 1–2 min não altera o tempo registrado.
 - **Testes:** manual: sessão curta (reduzir duração em `config.js` para teste), pausa longa, trocar de rota e voltar, aba em segundo plano. Conferir `focusSeconds` salvo.
 
-### T14 — Histórico diário e semanal · P1
+### T14 — Histórico diário e semanal · P1 · ✅ Concluída
 - **Depende de:** T12, T13
 - **Objetivo:** `view-study-history.js`: total do dia, lista de sessões do dia (matéria, horário, duração), totais da semana atual por dia e por matéria; navegação por semana anterior/seguinte.
 - **Critérios de aceitação:**
@@ -162,7 +162,7 @@ Documento de referência: `ARCHITECTURE.md`. Cada tarefa deve ser entregue, test
   - Estado vazio amigável.
 - **Testes:** manual com dados de 2+ dias e 2+ semanas; conferir somatórios contra `localStorage`.
 
-### T15 — Gráficos de evolução do estudo · P1
+### T15 — Gráficos de evolução do estudo · P1 · ✅ Concluída
 - **Depende de:** T14, T10 (reutiliza `charts.js`)
 - **Objetivo:** adicionar `Charts.bars` e exibir: minutos por dia (últimos 7 dias), minutos por semana (últimas 4 semanas) e tempo por matéria.
 - **Critérios de aceitação:**
