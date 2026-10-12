@@ -108,7 +108,7 @@ Documento de referência: `ARCHITECTURE.md`. Cada tarefa deve ser entregue, test
   - Trocar de série mostra apenas dados da série atual.
 - **Testes:** manual com 0, 1, 2 e 4 matérias avaliadas; empate de notas.
 
-### T10 — Histórico de avaliações, comparação e evolução · P1
+### T10 — Histórico de avaliações, comparação e evolução · P1 · ✅ Concluída
 - **Depende de:** T07, T09 (e cria `charts.js` com gráfico de linha)
 - **Objetivo:** `view-assessment-history.js` + `Charts.line`: lista de avaliações (filtro por matéria), variação em relação à anterior (▲/▼/=), gráfico de evolução por matéria.
 - **Critérios de aceitação:**

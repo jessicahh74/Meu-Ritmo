@@ -439,6 +439,179 @@
   color: var(--color-text-muted);
 }
 
+.assessment-history {
+  max-width: 64rem;
+}
+
+.history-controls {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 22rem;
+  margin-top: var(--space-5);
+}
+
+.history-controls label {
+  font-weight: 750;
+}
+
+.history-controls select {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.history-section {
+  margin-top: var(--space-6);
+}
+
+.history-comparison-grid,
+.history-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--space-4);
+}
+
+.history-comparison-card,
+.history-chart-card,
+.history-entry,
+.history-filter-empty {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.history-comparison-card h3,
+.history-chart-card h3,
+.history-entry h3 {
+  margin-top: 0;
+}
+
+.history-comparison-card dl {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: 0;
+}
+
+.history-comparison-card dt {
+  color: var(--color-text-muted);
+}
+
+.history-comparison-card dd {
+  margin: 0;
+  font-weight: 750;
+  text-align: right;
+}
+
+.history-chart {
+  width: 100%;
+  overflow: hidden;
+}
+
+.line-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.chart-grid-line {
+  stroke: var(--color-border);
+  stroke-width: 1;
+}
+
+.chart-axis-label,
+.chart-date-label {
+  fill: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.chart-line {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4;
+}
+
+.chart-marker {
+  stroke: var(--color-surface);
+  stroke-width: 3;
+}
+
+.band-fill-verde { fill: var(--band-verde); }
+.band-fill-amarelo { fill: var(--band-amarelo); }
+.band-fill-laranja { fill: var(--band-laranja); }
+.band-fill-vermelho { fill: var(--band-vermelho); }
+
+.chart-value-label {
+  fill: var(--color-text);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.assessment-history-list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.history-entry {
+  --result-band-color: var(--color-border);
+  border-left: 0.4rem solid var(--result-band-color);
+}
+
+.history-entry-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.history-entry-heading time {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.history-entry-score {
+  margin-bottom: var(--space-2);
+  font-size: 1.1rem;
+  font-weight: 750;
+}
+
+.history-entry-band {
+  color: var(--result-band-color);
+  font-weight: 750;
+}
+
+.history-variation {
+  font-weight: 750;
+}
+
+.history-variation.is-positive { color: var(--band-verde); }
+.history-variation.is-negative { color: var(--band-vermelho); }
+.history-variation.is-stable { color: var(--color-text-muted); }
+
+.history-result-link {
+  font-weight: 700;
+}
+
+.history-filter-empty p {
+  color: var(--color-text-muted);
+}
+
+.history-back-link {
+  margin-top: var(--space-6);
+}
+
 @media (max-width: 31rem) {
   .quiz-actions,
   .result-actions {
@@ -450,5 +623,16 @@
   .result-actions > * {
     width: 100%;
     text-align: center;
+  }
+
+  .history-entry-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .history-entry-heading time {
+    margin-bottom: var(--space-3);
+    text-align: left;
   }
 }
